@@ -14,6 +14,13 @@ CREATE TABLE Albums (
     year_published INTEGER NOT NULL
 );
 
+CREATE TABLE Songs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(70) NOT NULL,
+    album_id  INTEGER NOT NULL,
+    FOREIGN KEY (album_id) REFERENCES Albums(id)
+);
+
 /* 
  * TODO: Insert at least 4 rows of data into the songs table. You can change up the albums as well. :)
  */
@@ -38,20 +45,36 @@ VALUES
 -- SELECT * FROM Songs;
 
 SELECT * FROM Albums;
-
+SELECT * FROM Songs;
 /* 
  * TODO: Write a table join query to construct a table of Song Name : Album Name
  */
+SELECT Songs.name, Albums.name
+From Songs
+Join Albums
+    ON Songs.album_id = Albums.id;
 
 /*
  * TODO: Find all albums published between 1970 and 1980.
  */
+SELECT * FROM Albums
+WHERE year_published >= 1970 and year_published <= 1980;
 
 /*
  * TODO: Find all songs on albums published between 1970 and 1980. 
  *(Hint: Use a table join.)
  */
- 
+ SELECT Songs.name, Albums.name, Albums.year_published
+ FROM Songs
+ JOIN Albums
+    ON Songs.album_id = Albums.id
+WHERE year_published >= 1970 and year_published <= 1980;
+
 /*
  * TODO: Find all songs on albums with names containing 'California'.
  */
+SELECT Songs.anme, Albums.name
+FROM Songs
+JOIN Albums
+    ON Songs.album_id = Albums.id
+WHERE Songs.name LIKE '%California%'
